@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="panel panel-success col-md-3 ">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">Your Guesses</h3>
+        </div>
+        <div class="panel-body">
+            <ul ng-repeat="guess in currentGame.YourGuesses" class="list-group">
+                <li game-guess guess="guess" ng-class-odd="{'well' : !$first}" ng-class="{'gray-background' :$first}"
+                    class="list-group-item">
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="panel panel-primary col-md-4 col-md-offset-1">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center big-text"><strong>{{currentGame.Name}}</strong></h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group text-center">
+                <li class="list-group-item">
+                    <span>Your Color: </span><strong>{{currentGame.YourColor}}</strong>
+                </li>
+                <li class="list-group-item">
+                    <span>Your Number: </span><strong>{{secretNumberText}}</strong>
+                    <button class="btn btn-xs btn-default pull-right" ng-click="toggleSecretNumberButton()">
+                        {{secretNumberShowButtonText}}
+                    </button>
+                </li>
+
+                <li class="list-group-item">
+                    <span> Opponent: </span>
+                    <strong>{{currentGame | opponentPlayer}}</strong>
+                </li>
+                <li class="list-group-item">
+                    <span> Game Status: </span>
+                    <strong>{{currentGame | gameStateMessage}}</strong>
+                </li>
+                <li class="list-group-item" ng-show="currentGame.inTurn">
+                    <form name="makeGuessForm" class="form-horizontal">
+                        <fieldset>
+                            <legend>Make Guess</legend>
+                            <div class="form-group">
+                                <label for="guess-number" class="col-md-2 control-label">Number</label>
+
+                                <div class="col-md-9 pull-right">
+                                    <input id="guess-number" type="number" placeholder="Four digit number"
+                                           ng-model="number" pattern="^\d{4}$" required="required"
+                                           class="form-control small"/>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button ng-click="guess(currentGame.Id,number)" ng-disabled="makeGuessForm.$invalid" class="btn btn-primary pull-right">
+                                    Guess
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-danger col-md-3 col-md-offset-1">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">Opponent Guesses</h3>
+        </div>
+        <div class="panel-body">
+            <ul ng-repeat="guess in currentGame.OpponentGuesses" class="list-group">
+                <li game-guess guess="guess" ng-class-odd="{'well' : !$first}" ng-class="{'gray-background' :$first}"
+                    class="list-group-item">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

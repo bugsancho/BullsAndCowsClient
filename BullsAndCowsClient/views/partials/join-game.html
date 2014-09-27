@@ -1,0 +1,21 @@
+<div class="container">
+<form name="joinGameForm" class="form-horizontal">
+    <fieldset>
+        <legend>Join Game</legend>
+        <div class="form-group">
+            <label for="secret-number" class="col-md-2 control-label">Your Secret Number</label>
+
+            <div class="col-md-10">
+                <input id="secret-number" type="number" placeholder="Secret four digit number" ng-model="number"
+                       pattern="^\d{4}$" required="required" class="form-control"/>
+            </div>
+        </div>
+
+        <div>
+            <button ng-click="joinGame(gameId,number)" ng-disabled="joinGameForm.$invalid" class="btn btn-primary pull-right">
+                Join
+            </button>
+        </div>
+    </fieldset>
+</form>
+        </div>

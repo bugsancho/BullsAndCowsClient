@@ -1,0 +1,36 @@
+<div class="container">
+    <h2 ng-show="isAuthenticated()">My Games</h2>
+    <ul class="list-group">
+        <li style="height:50px;" class="list-group-item text-center center-block" ng-repeat="game in playableGames">
+            <span class="col-md-3">
+                <strong> Game name: </strong>
+                <span>{{game.Name}}  </span>
+            </span>
+            <span class="col-md-3">
+                <strong> Opponent: </strong>
+                <span>{{game | opponentPlayer}}</span>
+            </span>
+             <span class="col-md-3" >
+                <strong> Game Status: </strong>
+                <span>{{game | gameStateMessage}}</span>
+            </span>
+
+            <a href="#/play/{{game.Id}}" class=" pull-right btn btn-sm btn-danger" ng-show="game.inTurn">Play</a>
+        </li>
+    </ul>
+    <h2>Avaiable Games</h2>
+    <ul class="list-group">
+        <li style="height:50px;" class="list-group-item text-center center-block" ng-repeat="game in availableGames">
+             <span class="col-md-5">
+                <strong> Game name: </strong>
+                <span>{{game.Name}}  </span>
+            </span>
+            <span class="col-md-5">
+                <strong> Opponent: </strong>
+                <span>{{game.Red}}</span>
+            </span>
+            <a href="#/join/{{game.Id}}" class=" pull-right btn btn-sm btn-info " > Join</a>
+        </li>
+    </ul>
+
+</div>
