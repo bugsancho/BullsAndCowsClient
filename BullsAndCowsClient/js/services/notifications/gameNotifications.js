@@ -3,14 +3,31 @@
  */
 'use strict';
 
-app.factory('notifications', ['$http', '$q', 'authorization', 'identity', 'baseServiceUrl', 'notifier', '$interval', function GamesInfo($http, $q, authorization, identity, baseServiceUrl, notifier, $interval) {
+app.factory('notifications', ['$http', '$q','$resource','authorization', 'identity', 'baseServiceUrl', 'notifier', '$interval', function GamesInfo($http, $q,$resource, authorization, identity, baseServiceUrl, notifier, $interval) {
 
     var notificationsUrl = baseServiceUrl + '/api/notifications';
+    $http.defaults.headers.common = authorization.getAuthorizationHeader();
+
+    var NotificationsResource = $resource(notificationsUrl,{},{
+        'public': {  method: 'GET', isArray: true}
+    });
+
+    function getNotifications() {
+        var deferred = $q.defer();
+        var header = authorization.getAuthorizationHeader();
+        $http.get(notificationsUrl, {headers: header})
+            .then(function (data, status, headers, config) {
+                deferred.resolve(data.data);
+            }, function (error) {
+                deferred.reject(error);
+            });
+        return deferred.promise;
+    }
 
     function getNextNotification() {
         var deferred = $q.defer();
         var header = authorization.getAuthorizationHeader();
-        $http.get(notificationsUrl + '/next', {headers: header})
+        $http.get(notificationsUrl + '/next')
             .then(function (data, status, headers, config) {
                 deferred.resolve(data);
             }, function (error) {
@@ -32,17 +49,7 @@ app.factory('notifications', ['$http', '$q', 'authorization', 'identity', 'baseS
     }
     return {
 
-        getNotifications: function getNotifications() {
-            var deferred = $q.defer();
-            var header = authorization.getAuthorizationHeader();
-            $http.get(notificationsUrl, {headers: header})
-                .then(function (data, status, headers, config) {
-                    deferred.resolve(data.data);
-                }, function (error) {
-                    deferred.reject(error);
-                });
-            return deferred.promise;
-        },
+        getNotifications: NotificationsResource.query,
 
         getNextNotification: getNextNotification,
 

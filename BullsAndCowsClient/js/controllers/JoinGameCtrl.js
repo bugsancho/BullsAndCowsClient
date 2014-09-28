@@ -3,7 +3,7 @@
  */
 'use strict';
 
-app.controller('JoinGameCtrl', ['$scope', '$routeParams', 'notifier', 'joinGame','notifications', function GamesCtrl($scope, $routeParams, notifier, joinGame,notifications) {
+app.controller('JoinGameCtrl', ['$scope', '$routeParams', 'notifier', 'joinGame', 'notifications', function GamesCtrl($scope, $routeParams, notifier, joinGame, notifications) {
     var gameId = $routeParams.gameId;
     $scope.gameId = gameId;
 

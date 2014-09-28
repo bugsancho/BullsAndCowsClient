@@ -1,7 +1,15 @@
 'use strict';
 
 var app = angular.module('myApp', ['ngRoute', 'ngResource', 'ngCookies']).
-    config(['$routeProvider', function($routeProvider) {
+    config(['$routeProvider', function ($routeProvider) {
+
+        function validateAuthentication(identity, notifier) {
+            if (!identity.isAuthenticated()) {
+                window.location = '#/';
+                notifier.error('You need to be logged in to do that!')
+            }
+        }
+
         $routeProvider
             .when('/', {
                 templateUrl: '../views/partials/home.html'
@@ -16,21 +24,26 @@ var app = angular.module('myApp', ['ngRoute', 'ngResource', 'ngCookies']).
             })
             .when('/create', {
                 templateUrl: '../views/partials/create-game.html',
-                controller: 'CreateGameCtrl'
+                controller: 'CreateGameCtrl',
+                resolve: {authentication: validateAuthentication}
             })
-            .when('/play/:gameId', {
+            .
+            when('/play/:gameId', {
                 templateUrl: '../views/partials/play-game.html',
-                controller: 'PlayGameCtrl'
+                controller: 'PlayGameCtrl',
+                resolve: {authentication: validateAuthentication}
             })
             .when('/join/:gameId', {
                 templateUrl: '../views/partials/join-game.html',
-                controller: 'JoinGameCtrl'
+                controller: 'JoinGameCtrl',
+                resolve: {authentication: validateAuthentication}
             })
             .when('/scores', {
                 templateUrl: '../views/partials/scores.html',
                 controller: 'ScoresCtrl'
             })
-           .otherwise({ redirectTo: '/' });
+            .otherwise({ redirectTo: '/' });
     }])
-    .value('toastr', toastr)
+    .
+    value('toastr', toastr)
     .constant('baseServiceUrl', 'http://bullsandcowswebapi.apphb.com');

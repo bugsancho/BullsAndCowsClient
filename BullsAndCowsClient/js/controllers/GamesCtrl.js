@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('GamesCtrl', ['$scope', '$interval', 'notifier', 'gamesInfo', 'gameJoinedFilter', 'identity', 'notifications',
-    function GamesCtrl($scope, $interval, notifier, gamesInfo, gameJoinedFilter, identity,notifications) {
+    function GamesCtrl($scope, $interval, notifier, gamesInfo, gameJoinedFilter, identity, notifications) {
         $scope.isAuthenticated = identity.isAuthenticated;
         $scope.getCurrentUser = identity.getCurrentUser;
 
