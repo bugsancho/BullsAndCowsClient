@@ -13,7 +13,6 @@ app.controller('JoinGameCtrl', ['$scope', '$routeParams', 'notifier', 'joinGame'
     function joinGameFunc(id, number) {
         joinGame.joinGame(id, number)
             .then(function (data) {
-                console.log(data.Id);
                 window.location = '#/play/' + data.Id;
                 notifier.success('Game joined successfully');
             }, function (error) {
